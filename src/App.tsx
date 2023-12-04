@@ -51,8 +51,7 @@ function App() {
             <div>
               <h1 className='font-black text-3xl m-0'>Kigurumi Face Craft 🗿</h1>
               <p className="text-gray-500 m-0 text-sm">Kig.land 偶域偶装面部塑形 （工具 Alpha v0.0.1, 模型 v0.0.0）</p>
-              <p className="text-gray-500 m-0 text-sm">更多细节欢迎访问 www.kig.land Q群</p>
-
+              <p className="text-gray-500 m-0 text-sm">更多细节欢迎访问 www.kig.land Q群 903520753</p>
             </div>
             <p className="flex flex-row space-x-4">
               <Button color="primary"
@@ -111,9 +110,11 @@ function App() {
               hideValue
             />
             {/* <Switch className="my-4" >模型细化</Switch> */}
-            <Button color="primary">
-              保存配置，生成模型
-            </Button>
+            <div className="pt-8">
+              <Button color="primary">
+                保存配置，生成模型
+              </Button>
+            </div>
           </div>
           <div className="p-4">
 
