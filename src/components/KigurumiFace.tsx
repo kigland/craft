@@ -2,7 +2,6 @@ import { useEffect, useRef, } from 'react'
 import { ThreeElements, useFrame, } from '@react-three/fiber'
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three-stdlib'
-import { color } from 'framer-motion'
 import * as THREE from 'three'
 
 const KigurumiFace = (props: ThreeElements['mesh'] & {
