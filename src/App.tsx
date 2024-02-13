@@ -4,14 +4,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Canvas, } from '@react-three/fiber'
 import './App.css'
 import { OrbitControls, Text } from '@react-three/drei'
-import Face from './components/Face'
 import KigurumiFace from './components/KigurumiFace'
 import { Switch, Slider, Button } from "@nextui-org/react";
 function App() {
 
   const [loli, setLoli] = useState(0);
   const [onneSan, setOnneSan] = useState(0);
-  const [maskColor, setMaskColor] = useState("#f3c4bf")
+  const [maskColor, setMaskColor] = useState("#f3c4bf");
+  const [subvision, setSubvision] = useState<number>(1);
 
   // eye
   const [leftEye, setLeftEye] = useState(0);
@@ -27,6 +27,7 @@ function App() {
             <pointLight position={[0, -10, 30]} decay={0} intensity={2} />
             <OrbitControls />
             <KigurumiFace
+              subvision={subvision}
               shapeValues={[loli, onneSan, leftEye, righttEye]}
               faceModelUrl="/v0.model.kigland.glb"
               rotation={[0.1, 0.3, 0]}
@@ -53,7 +54,7 @@ function App() {
               <p className="text-gray-500 m-0 text-sm">Kig.land 偶域偶装面部塑形 （工具 Alpha v0.0.1, 模型 v0.0.0）</p>
               <p className="text-gray-500 m-0 text-sm">更多细节欢迎访问 www.kig.land Q群 903520753</p>
             </div>
-            <p className="flex flex-row space-x-4">
+            <div className="flex flex-row space-x-4">
               <Button color="primary"
                 style={{ backgroundColor: "#f3c4bf" }}
                 className="text-red-900"
@@ -68,7 +69,7 @@ function App() {
               >
                 黄 肤色
               </Button>
-            </p>
+            </div>
             <Slider
               label="幼女"
               step={0.01}
@@ -109,7 +110,7 @@ function App() {
               className="max-w-md"
               hideValue
             />
-            {/* <Switch className="my-4" >模型细化</Switch> */}
+
             <div className="pt-8">
               <Button color="primary">
                 保存配置，生成模型

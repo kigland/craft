@@ -24,6 +24,10 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
   useEffect(() => {
     ref.current.children[0].morphTargetInfluences = shapeValues;
     ref.current.children[0].material.color = new THREE.Color(props.color || "#f3c4bf");
+
+  }, [shapeValues, props.color]);
+
+  useEffect(() => {
     subvision > 0 && (ref.current.children[0].geometry = LoopSubdivision
       .modify(cubeGeometry.scene.children[0].geometry, 1, {
         split: true,       // optional, default: true
@@ -32,7 +36,7 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
         flatOnly: false,      // optional, default: false
         maxTriangles: 10000,   // optional, default: Infinity
       }))
-  }, [shapeValues, props.color, subvision],);
+  }, [subvision]);
 
   return <mesh {...props}>
     {props.children}
