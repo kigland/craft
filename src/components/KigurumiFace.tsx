@@ -1,5 +1,5 @@
 import { useEffect, useRef, } from 'react'
-import { ThreeElements, useFrame, } from '@react-three/fiber'
+import { ThreeElements } from '@react-three/fiber'
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three-stdlib'
 import * as THREE from 'three'
@@ -17,6 +17,8 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
   shapeValues?: number[],
   faceModelUrl?: string,
   color?: string,
+  refreshMeshForDownload: number,
+  setMeshForDownload: (mesh: any) => void,
   setKigurumiMorphTargetDictionary?: (labels: string[] | any) => void,
 }) => {
 
@@ -24,6 +26,8 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
     shapeValues = [0],
     faceModelUrl,
     setKigurumiMorphTargetDictionary,
+    refreshMeshForDownload,
+    setMeshForDownload
   } = props;
 
   const ref = useRef<ThreeElements['primitive']>(null!);
@@ -35,6 +39,9 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
     ref.current.children[0].material.color = new THREE.Color(props.color || "#f3c4bf");
   }, [shapeValues, props.color]);
 
+  useEffect(() => {
+    setMeshForDownload(ref.current.children[0].geometry);
+  }, [refreshMeshForDownload]);
 
   useEffect(() => {
     // morphTargetDictionary to set labels

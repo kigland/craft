@@ -1,28 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import { Canvas, } from '@react-three/fiber'
 import './App.css'
-import { OrbitControls, Text } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 import KigurumiFace from './components/KigurumiFace'
-import { Switch, Slider, Button, Link } from "@nextui-org/react";
-
+import { Slider, Button, Link } from "@nextui-org/react";
+import * as Three from 'three'
 import { shapeKeyDict } from './shapeKeyDict'
-
-type SliderProp = {
-  key: string,
-  label: string,
-  value: number,
-}
-
+import { STLExporter } from 'three-stdlib'
+import { LoopSubdivision } from 'three-subdivide'
 
 function App() {
 
   const [maskColor, setMaskColor] = useState("#f3c4bf");
-  const [subvision, setSubvision] = useState<number>(1);
-
   const [kigurumiMorphTargetDictionary, setKigurumiMorphTargetDictionary] = useState<any>({});
-  const [shapeKeyVaules, setShapeKeyValues] = useState<number[]>([]);
+  const [shapeKeyValues, setShapeKeyValues] = useState<number[]>([]);
+  const [refreshMeshForDownload, setRefreshMeshForDownload] = useState<number>(0);
+  const [meshForDownload, setMeshForDownload] = useState<Three.BufferGeometry>(null!);
 
   useEffect(() => {
     console.log('morphTargetDictionary', kigurumiMorphTargetDictionary)
@@ -43,15 +36,15 @@ function App() {
             <OrbitControls />
             <KigurumiFace
               setKigurumiMorphTargetDictionary={setKigurumiMorphTargetDictionary}
-              shapeValues={[...shapeKeyVaules]}
+              shapeValues={[...shapeKeyValues]}
               faceModelUrl="/v0.01.model.kigland.glb"
-              rotation={[0.1, 0.4, 0]}
-              scale={0.022}
+              rotation={[0.04, 0.4, 0]}
+              scale={0.02}
               position={[0, -2.2, -1]}
               color={maskColor}
-            >
-            </KigurumiFace>
-            {/* <Text position={[0, 3, 0]} scale={[0.5, 0.5, 0.5]}> craft.kig.land</Text> */}
+              setMeshForDownload={setMeshForDownload}
+              refreshMeshForDownload={refreshMeshForDownload}
+            />
           </Canvas>
         </div>
         <div className="w-1/2 px-4 select-none">
@@ -101,11 +94,11 @@ function App() {
                       minValue={0}
                       defaultValue={0}
                       // hideValue
-                      value={shapeKeyVaules[kigurumiMorphTargetDictionary[key]]}
+                      value={shapeKeyValues[kigurumiMorphTargetDictionary[key]]}
                       onChange={(value) => {
-                        const tmpShapeKeyVaules = [...shapeKeyVaules];
-                        tmpShapeKeyVaules[kigurumiMorphTargetDictionary[key]] = value as number;
-                        setShapeKeyValues([...tmpShapeKeyVaules])
+                        const tmpshapeKeyValues = [...shapeKeyValues];
+                        tmpshapeKeyValues[kigurumiMorphTargetDictionary[key]] = value as number;
+                        setShapeKeyValues([...tmpshapeKeyValues])
                       }}
                     />
                   </div>
@@ -113,10 +106,59 @@ function App() {
               }
             </div>
 
-            <div className="pt-8">
-              <Button color="primary">
-                保存配置，生成模型
+            <div className="pt-2">
+              <p className="text-gray-400 m-0 text-sm my-2 font-thin ">
+                仅供参考，实际效果可能有所不同
+              </p>
+              <Button color="primary" onClick={() => {
+                setRefreshMeshForDownload(refreshMeshForDownload + 1)
+                // sleep 1s 
+                setTimeout(() => {
+                  function applyMorphTargets(geometry: Three.BufferGeometry, influences: number[]) {
+                    const morphAttributes = geometry.morphAttributes.position;
+                    for (let i = 0; i < morphAttributes.length; i++) {
+                      const morphAttribute = morphAttributes[i];
+                      for (let j = 0; j < morphAttribute.count; j++) {
+                        const morphedPosition = new Three.Vector3().fromBufferAttribute(morphAttribute, j).multiplyScalar(influences[i]);
+                        geometry.attributes.position.setXYZ(j,
+                          geometry.attributes.position.getX(j) + morphedPosition.x,
+                          geometry.attributes.position.getY(j) + morphedPosition.y,
+                          geometry.attributes.position.getZ(j) + morphedPosition.z);
+                      }
+                    }
+                    geometry.attributes.position.needsUpdate = true;
+                  }
+
+                  const originalGeometry = meshForDownload;
+                  let clonedGeometry = originalGeometry.clone();
+
+                  applyMorphTargets(clonedGeometry, shapeKeyValues);
+
+                  const mesh = new Three.Mesh(
+                    LoopSubdivision
+                      .modify(clonedGeometry, 2, {
+                        split: true,       // optional, default: true
+                        uvSmooth: false,      // optional, default: false
+                        preserveEdges: false,      // optional, default: false
+                        flatOnly: false,      // optional, default: false
+                        maxTriangles: Infinity,   // optional, default: Infinity
+                      })
+                  );
+
+                  const exporter = new STLExporter()
+                  const result = exporter.parse(mesh, { binary: true });
+                  const blob = new Blob([result], { type: 'application/octet-stream' });
+                  const link = document.createElement('a');
+                  link.href = URL.createObjectURL(blob);
+                  link.download = 'kigurumi-face.stl';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }, 1000)
+              }}>
+                下载模型
               </Button>
+              <Link className="text-sm ml-4"> 获取原模型 </Link>
             </div>
           </div>
           <div className="p-4">
