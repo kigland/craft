@@ -39,7 +39,7 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
 
   useEffect(() => {
     subvision > 0 && (ref.current.children[0].geometry = LoopSubdivision
-      .modify(cubeGeometry.scene.children[0].geometry, 2, {
+      .modify(cubeGeometry.scene.children[0].geometry, 1, {
         split: true,       // optional, default: true
         uvSmooth: true,      // optional, default: false
         preserveEdges: true,      // optional, default: false
