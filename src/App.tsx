@@ -5,7 +5,7 @@ import { Canvas, } from '@react-three/fiber'
 import './App.css'
 import { OrbitControls, Text } from '@react-three/drei'
 import KigurumiFace from './components/KigurumiFace'
-import { Switch, Slider, Button } from "@nextui-org/react";
+import { Switch, Slider, Button, Link } from "@nextui-org/react";
 
 import { shapeKeyDict } from './shapeKeyDict'
 
@@ -35,24 +35,26 @@ function App() {
         <div className="w-2/3 h-full bg-black bg-opacity-70">
           <Canvas >
             <ambientLight />
-            <spotLight position={[10, 10, 10]} angle={1} penumbra={1} decay={1} intensity={90} />
-            <pointLight position={[0, -10, 30]} decay={0} intensity={2} />
+            <spotLight position={[10, 20, 50]} angle={1} penumbra={1} decay={1} intensity={220} />
+            <spotLight position={[-10, 1, 1]} angle={1} penumbra={1} decay={1} intensity={50} />
+            <spotLight position={[10, 1, 1]} angle={1} penumbra={1} decay={1} intensity={50} />
+            <spotLight position={[1, -10, 1]} angle={1} penumbra={1} decay={1} intensity={50} />
+            <pointLight position={[0, 10, 30]} decay={0} intensity={2} />
             <OrbitControls />
             <KigurumiFace
               setKigurumiMorphTargetDictionary={setKigurumiMorphTargetDictionary}
-              subvision={subvision}
               shapeValues={[...shapeKeyVaules]}
               faceModelUrl="/v0.01.model.kigland.glb"
               rotation={[0.1, 0.4, 0]}
-              scale={0.02}
-              position={[0, -2, -2]}
+              scale={0.022}
+              position={[0, -2.2, -1]}
               color={maskColor}
             >
             </KigurumiFace>
             {/* <Text position={[0, 3, 0]} scale={[0.5, 0.5, 0.5]}> craft.kig.land</Text> */}
           </Canvas>
         </div>
-        <div className="w-1/2 px-4">
+        <div className="w-1/2 px-4 select-none">
           <div className="-ml-28 mr-28 rounded-3xl shadow-2xl p-8 flex flex-col space-y-4 bg-white ">
             <div className="-mt-24 p-4 h-32 w-32 border-8 border-black flex flex-col justify-center items-center text-5xl rounded-full shadow-2xl bg-white">
               <svg viewBox="0 0 195 178" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,17 +81,18 @@ function App() {
                 肉粉 肤色
               </Button>
               <Button color="primary"
-                style={{ backgroundColor: "#f3e3bf" }}
+                style={{ backgroundColor: "#f2ddac" }}
                 className="text-red-900"
-                onClick={() => { setMaskColor("#f3e3bf") }}
+                onClick={() => { setMaskColor("#f2ddac") }}
               >
                 黄 肤色
               </Button>
             </div>
-            <div className="h-80 p-8 overflow-auto relative">
+            <div className="h-80 p-4 overflow-auto relative shadow-inner  rounded-lg">
               {
                 kigurumiMorphTargetDictionary && Object.keys(kigurumiMorphTargetDictionary).map((key: string) => {
-                  return <div key={key} className="flex flex-row justify-between items-center">
+                  return <div key={key}
+                    className="flex flex-row justify-between items-center my-4">
                     <Slider
                       key={key}
                       label={`${(shapeKeyDict as any)[key]?.zh_CN ?? ""}`}
@@ -97,7 +100,7 @@ function App() {
                       maxValue={1}
                       minValue={0}
                       defaultValue={0}
-                      hideValue
+                      // hideValue
                       value={shapeKeyVaules[kigurumiMorphTargetDictionary[key]]}
                       onChange={(value) => {
                         const tmpShapeKeyVaules = [...shapeKeyVaules];
