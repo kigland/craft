@@ -6,6 +6,16 @@ import './App.css'
 import { OrbitControls, Text } from '@react-three/drei'
 import KigurumiFace from './components/KigurumiFace'
 import { Switch, Slider, Button } from "@nextui-org/react";
+
+import { shapeKeyDict } from './shapeKeyDict'
+
+type SliderProp = {
+  key: string,
+  label: string,
+  value: number,
+}
+
+
 function App() {
 
   const [loli, setLoli] = useState(0);
@@ -13,9 +23,25 @@ function App() {
   const [maskColor, setMaskColor] = useState("#f3c4bf");
   const [subvision, setSubvision] = useState<number>(1);
 
+  const [kigurumiMorphTargetDictionary, setKigurumiMorphTargetDictionary] = useState<any>({})
+  const [shapeKeyVaules, setShapeKeyValues] = useState<number[]>([])
+
   // eye
   const [leftEye, setLeftEye] = useState(0);
   const [righttEye, setRightEye] = useState(0);
+
+  useEffect(() => {
+    console.log('morphTargetDictionary', kigurumiMorphTargetDictionary)
+    setShapeKeyValues(new Array(Object.keys(kigurumiMorphTargetDictionary).length).fill(0))
+  }, [kigurumiMorphTargetDictionary]);
+
+  useEffect(() => {
+    console.log(shapeKeyVaules)
+  }, [shapeKeyVaules])
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <div className="h-screen bg-header ">
@@ -27,12 +53,13 @@ function App() {
             <pointLight position={[0, -10, 30]} decay={0} intensity={2} />
             <OrbitControls />
             <KigurumiFace
+              setKigurumiMorphTargetDictionary={setKigurumiMorphTargetDictionary}
               subvision={subvision}
-              shapeValues={[loli, onneSan, leftEye, righttEye]}
-              faceModelUrl="/v0.model.kigland.glb"
-              rotation={[0.1, 0.3, 0]}
-              scale={0.035}
-              position={[0.2, 0, 0]}
+              shapeValues={[...shapeKeyVaules]}
+              faceModelUrl="/v0.01.model.kigland.glb"
+              rotation={[0.1, 0.4, 0]}
+              scale={0.02}
+              position={[0, -2, -2]}
               color={maskColor}
             >
             </KigurumiFace>
@@ -51,7 +78,7 @@ function App() {
             </div>
             <div>
               <h1 className='font-black text-3xl m-0'>Kigurumi Face Craft 🗿</h1>
-              <p className="text-gray-500 m-0 text-sm">Kig.land 偶域偶装面部塑形 （工具 Alpha v0.0.1, 模型 v0.0.0）</p>
+              <p className="text-gray-500 m-0 text-sm">Kig.land 偶域偶装面部塑形 </p>
               <p className="text-gray-500 m-0 text-sm">更多细节欢迎访问 www.kig.land Q群 903520753</p>
             </div>
             <div className="flex flex-row space-x-4">
@@ -70,46 +97,29 @@ function App() {
                 黄 肤色
               </Button>
             </div>
-            <Slider
-              label="幼女"
-              step={0.01}
-              maxValue={1}
-              minValue={0}
-              onChange={(value) => { setLoli(value as number) }}
-              defaultValue={0}
-              className="max-w-md"
-              hideValue
-            />
-            <Slider
-              label="御姐"
-              step={0.01}
-              maxValue={1}
-              minValue={0}
-              onChange={(value) => { setOnneSan(value as number) }}
-              defaultValue={0}
-              hideValue
-              className="max-w-md"
-            />
-            <Slider
-              label="头壳左眼"
-              step={0.01}
-              maxValue={1}
-              minValue={0}
-              onChange={(value) => { setLeftEye(value as number) }}
-              defaultValue={0}
-              className="max-w-md"
-              hideValue
-            />
-            <Slider
-              label="头壳右眼"
-              step={0.01}
-              maxValue={1}
-              minValue={0}
-              onChange={(value) => { setRightEye(value as number) }}
-              defaultValue={0}
-              className="max-w-md"
-              hideValue
-            />
+            <div className="h-80 p-8 overflow-auto relative">
+              {
+                kigurumiMorphTargetDictionary && Object.keys(kigurumiMorphTargetDictionary).map((key: string) => {
+                  return <div key={key} className="flex flex-row justify-between items-center">
+                    <Slider
+                      key={key}
+                      label={`${(shapeKeyDict as any)[key]?.zh_CN ?? ""}`}
+                      step={0.01}
+                      maxValue={1}
+                      minValue={0}
+                      defaultValue={0}
+                      hideValue
+                      value={shapeKeyVaules[kigurumiMorphTargetDictionary[key]]}
+                      onChange={(value) => {
+                        const tmpShapeKeyVaules = [...shapeKeyVaules];
+                        tmpShapeKeyVaules[kigurumiMorphTargetDictionary[key]] = value as number;
+                        setShapeKeyValues([...tmpShapeKeyVaules])
+                      }}
+                    />
+                  </div>
+                })
+              }
+            </div>
 
             <div className="pt-8">
               <Button color="primary">
