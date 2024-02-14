@@ -63,9 +63,12 @@ function App() {
 
             </div>
             <div>
-              <h1 className='font-black text-3xl m-0'>Kigurumi Face Craft 🗿</h1>
-              <p className="text-gray-500 m-0 text-sm">Kig.land 偶域偶装面部塑形 </p>
-              <p className="text-gray-500 m-0 text-sm">更多细节欢迎访问 www.kig.land Q群 903520753</p>
+              <h1 className="font-black text-3xl m-0">Kigurumi Face Craft 🗿</h1>
+              <p className="text-gray-500 m-0 text-sm">
+                By <Link href="https://kig.land/" target="_blank">Kig.Land</Link> Lab
+                <span className="text-gray-400 m-0 text-sm"> model v2024.1.1</span>
+              </p>
+
             </div>
             <div className="flex flex-row space-x-4">
               <Button color="primary"
