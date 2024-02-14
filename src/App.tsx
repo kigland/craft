@@ -18,30 +18,16 @@ type SliderProp = {
 
 function App() {
 
-  const [loli, setLoli] = useState(0);
-  const [onneSan, setOnneSan] = useState(0);
   const [maskColor, setMaskColor] = useState("#f3c4bf");
   const [subvision, setSubvision] = useState<number>(1);
 
-  const [kigurumiMorphTargetDictionary, setKigurumiMorphTargetDictionary] = useState<any>({})
-  const [shapeKeyVaules, setShapeKeyValues] = useState<number[]>([])
-
-  // eye
-  const [leftEye, setLeftEye] = useState(0);
-  const [righttEye, setRightEye] = useState(0);
+  const [kigurumiMorphTargetDictionary, setKigurumiMorphTargetDictionary] = useState<any>({});
+  const [shapeKeyVaules, setShapeKeyValues] = useState<number[]>([]);
 
   useEffect(() => {
     console.log('morphTargetDictionary', kigurumiMorphTargetDictionary)
     setShapeKeyValues(new Array(Object.keys(kigurumiMorphTargetDictionary).length).fill(0))
   }, [kigurumiMorphTargetDictionary]);
-
-  useEffect(() => {
-    console.log(shapeKeyVaules)
-  }, [shapeKeyVaules])
-
-  useEffect(() => {
-
-  }, [])
 
   return (
     <div className="h-screen bg-header ">
@@ -130,10 +116,6 @@ function App() {
           <div className="p-4">
 
           </div>
-          {/*         
-        <div>
-          <Switch > subvision </Switch>
-        </div> */}
         </div>
       </div>
     </div >
