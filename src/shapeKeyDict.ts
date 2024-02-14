@@ -1,10 +1,5 @@
-{
-  "tpl": {
-    "zh_CN": "模板",
-    "zh_HK": "模板",
-    "en_US": "Template",
-    "ja_JP": "テンプレート"
-  },
+
+export const shapeKeyDict = {
   "Fcl_ALL_Neutral": {
     "zh_CN": "自然",
     "zh_HK": "自然",
@@ -148,5 +143,11 @@
     "zh_HK": "發音O",
     "en_US": "Pronounce O",
     "ja_JP": "「お」の発音"
+  },
+  "Fcl_MTH_Large": {
+    "zh_CN": "大嘴",
+    "zh_HK": "大嘴",
+    "en_US": "Large Mouth",
+    "ja_JP": "大きな口"
   }
 }
