@@ -226,6 +226,14 @@ function App() {
                       }
                     } />
                   <Button color="primary" isDisabled onClick={() => { }} className="mt-4">Enter</Button>
+                  <div className="text-center text-sm text-gray-300 mt-4">
+                    <div className="">
+                      GPL v2.0 open source at <Link className="text-sm" href="https://github.com/kigland" target="_blank">Github</Link>
+                    </div>
+                    <div className="">
+                      By <Link className="text-sm" href="https://kig.land" target="_blank">Kig.Land</Link> KIGURUMI workshop
+                    </div>
+                  </div>
                 </CardBody>
               </Card>
             </div>
