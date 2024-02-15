@@ -158,7 +158,27 @@ function App() {
               }}>
                 下载模型
               </Button>
-              <Link className="text-sm ml-4"> 获取原模型 </Link>
+              <Button color="primary" variant="bordered" className="ml-2" onClick={() => {
+                // it will download dictionary with shapekey value as json
+
+                const dataForDownload: any = [];
+
+                kigurumiMorphTargetDictionary && Object.keys(kigurumiMorphTargetDictionary).forEach((key: string) => {
+                  dataForDownload.push({
+                    key: key,
+                    value: shapeKeyValues[kigurumiMorphTargetDictionary[key]]
+                  })
+                })
+
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(new Blob([JSON.stringify(dataForDownload)], { type: 'application/json' }));
+                link.download = 'kigurumi-face-shapekey-values.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+              }}>下载数据</Button>
+              <Link className="text-sm ml-4" href="https://github.com/kigland"> 获取原模型 </Link>
             </div>
           </div>
           <div className="p-4">
