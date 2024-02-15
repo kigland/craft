@@ -1,30 +1,28 @@
-# React + TypeScript + Vite
+![](./public/github_banner.jpg)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# [Craft](https://craft.kig.land) - Kigurumi first, A light-weight online face editor for Kigurumi Cosplay Character Customizer
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> We aim to create a tool for KIGURUMI customization that is online and accessible to everyone, requiring no prior knowledge of modeling.
 
-## Expanding the ESLint configuration
+Craft is a toolkit for Kigurumi base model customization. It is a web-based application that allows users to customize their Kigurumi base model with a variety of options. The application is designed to be user-friendly and accessible to everyone, requiring no prior knowledge of modeling. The application is built using React, TypeScript, Threejs and Vite.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Motivation
 
-- Configure the top-level `parserOptions` property like this:
+Kigurumi is a type of cosplay that involves wearing a mask and a bodysuit to represent a specific character. The bodysuit is often custom-made to fit the wearer's body, and the mask is often custom-made to fit the wearer's face. The process of creating a custom Kigurumi mask is time-consuming and requires a lot of skill and knowledge of 3D modeling. We aim to create a tool for Kigurumi customization that is online and accessible to everyone, requiring no prior knowledge of modeling.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Features
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- [x] Model Customization
+- [x] Apply customization result && Model Export (to `.stl`)
+- [x] Model data export (to `.json`)
+
+## License
+
+[GPL-2.0](./LICENSE)
+
+## Screenshots
+
+![screenshot.1](./docs/screenshot_1.png)
+![screenshot.2](./docs/screenshot_2.png)
