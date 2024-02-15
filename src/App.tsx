@@ -3,7 +3,7 @@ import { Canvas, } from '@react-three/fiber'
 import './App.css'
 import { OrbitControls } from '@react-three/drei'
 import KigurumiFace from './components/KigurumiFace'
-import { Slider, Button, Link, ScrollShadow, Input, Card, CardBody, CircularProgress } from "@nextui-org/react"
+import { Slider, Button, Link, ScrollShadow, Input, Card, CardBody } from "@nextui-org/react"
 import * as Three from 'three'
 import { shapeKeyDict } from './shapeKeyDict'
 import { STLExporter } from 'three-stdlib'
