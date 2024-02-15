@@ -1,17 +1,17 @@
-import { useEffect, useRef, } from 'react'
-import { ThreeElements } from '@react-three/fiber'
-import { useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three-stdlib'
-import * as THREE from 'three'
-import { LoopSubdivision } from 'three-subdivide'
-import { DRACOLoader } from 'three-stdlib'
+import { useEffect, useMemo, useRef } from 'react';
+import { ThreeElements } from '@react-three/fiber';
+import { useLoader } from '@react-three/fiber';
+import { GLTFLoader } from 'three-stdlib';
+import * as THREE from 'three';
+import { LoopSubdivision } from 'three-subdivide';
+import { DRACOLoader } from 'three-stdlib';
 
 export const loadDRACOModel = (loader: any) => {
   const dracoLoader = new DRACOLoader();
   dracoLoader.setDecoderPath('/draco/');
   dracoLoader.preload();
   loader.setDRACOLoader(dracoLoader);
-}
+};
 
 const KigurumiFace = (props: ThreeElements['mesh'] & {
   shapeValues?: number[],
@@ -32,7 +32,18 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
 
   const ref = useRef<ThreeElements['primitive']>(null!);
 
-  const cubeGeometry: any = useLoader(GLTFLoader, faceModelUrl || '/cube.glb',);
+  const loadedGltfModel = useLoader(GLTFLoader, faceModelUrl || '/cube.glb');
+
+  const subdividedGeometry = useMemo(() => {
+    const geometry = (loadedGltfModel.scene.children[0] as THREE.Mesh).geometry.clone(); // Clone geometry before modifying it
+    return LoopSubdivision.modify(geometry, 2, { // Assuming a fixed subdivision level of 2
+      split: true,
+      uvSmooth: false,
+      preserveEdges: false,
+      flatOnly: false,
+      maxTriangles: Infinity,
+    });
+  }, [loadedGltfModel]);
 
   useEffect(() => {
     ref.current.children[0].morphTargetInfluences = shapeValues;
@@ -44,25 +55,19 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
   }, [refreshMeshForDownload]);
 
   useEffect(() => {
-    // morphTargetDictionary to set labels
-    setKigurumiMorphTargetDictionary
-      && setKigurumiMorphTargetDictionary(cubeGeometry.scene.children[0].morphTargetDictionary);
-
-    ref.current.children[0].geometry = LoopSubdivision
-      .modify(cubeGeometry.scene.children[0].geometry, 2, {
-        split: true,       // optional, default: true
-        uvSmooth: false,      // optional, default: false
-        preserveEdges: false,      // optional, default: false
-        flatOnly: false,      // optional, default: false
-        maxTriangles: Infinity,   // optional, default: Infinity
-      })
-  }, []);
+    // Apply the subdivided geometry to the mesh
+    const mesh = ref.current.children[0] as THREE.Mesh;
+    mesh.geometry = subdividedGeometry;
+    // Optional: Set morph target dictionary if needed
+    if (setKigurumiMorphTargetDictionary) {
+      setKigurumiMorphTargetDictionary(mesh.morphTargetDictionary);
+    }
+  }, [subdividedGeometry, setKigurumiMorphTargetDictionary]);
 
   return <mesh {...props}>
     {props.children}
-    <primitive object={cubeGeometry.scene} ref={ref} />
-  </mesh>
-
-}
+    <primitive object={loadedGltfModel.scene} ref={ref} />
+  </mesh>;
+};
 
 export default KigurumiFace;
