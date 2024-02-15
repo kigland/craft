@@ -21,7 +21,6 @@ function App() {
   const [modelUrl, setModelUrl] = useState<string>("");
 
   useEffect(() => {
-    console.log('morphTargetDictionary', kigurumiMorphTargetDictionary)
     setShapeKeyValues(new Array(Object.keys(kigurumiMorphTargetDictionary).length).fill(0))
   }, [kigurumiMorphTargetDictionary]);
 
@@ -40,9 +39,6 @@ function App() {
       <div className="h-full bg-white bg-opacity-60">
         {
           (modelUrl && modelUrl.match(/^(http|https):\/\//)) ?
-
-
-
             // loaded
             (<div className="h-full flex flex-row justify-between items-center">
               <div className="w-2/3 h-full bg-black bg-opacity-70">
@@ -84,10 +80,7 @@ function App() {
                       By <Link href="https://kig.land/" target="_blank">Kig.Land</Link> Lab
                       <span className="text-gray-400 m-0 text-sm"> model v2024.1.1</span>
                     </p>
-
                   </div>
-
-
                   {
                     shapeKeyValues.length > 0
                       // false
@@ -216,8 +209,6 @@ function App() {
                 </div>
               </div>
             </div>)
-
-
             : <div className="flex flex-row justify-center items-center h-full">
               <Card >
                 <CardBody>
