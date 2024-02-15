@@ -20,6 +20,7 @@ const KigurumiFace = (props: ThreeElements['mesh'] & {
   refreshMeshForDownload: number,
   setMeshForDownload: (mesh: any) => void,
   setKigurumiMorphTargetDictionary?: (labels: string[] | any) => void,
+  setLoaded?: (loaded: boolean) => void,
 }) => {
 
   const {
