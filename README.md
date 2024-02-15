@@ -20,7 +20,7 @@ Kigurumi is a type of cosplay that involves wearing a mask and a bodysuit to rep
 
 ## License
 
-[GPL-2.0](./LICENSE)
+[GPL-2.0](./LICENSE) (source code only, assets may have different licenses)
 
 ## Screenshots
 
