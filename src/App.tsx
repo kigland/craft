@@ -3,7 +3,7 @@ import { Canvas, } from '@react-three/fiber'
 import './App.css'
 import { OrbitControls } from '@react-three/drei'
 import KigurumiFace from './components/KigurumiFace'
-import { Slider, Button, Link } from "@nextui-org/react";
+import { Slider, Button, Link, ScrollShadow } from "@nextui-org/react"
 import * as Three from 'three'
 import { shapeKeyDict } from './shapeKeyDict'
 import { STLExporter } from 'three-stdlib'
@@ -82,11 +82,11 @@ function App() {
                 黄 肤色
               </Button>
             </div>
-            <div className="h-80 p-4 overflow-auto relative shadow-inner  rounded-lg">
+            <ScrollShadow className="h-80 relative flex flex-row flex-wrap">
               {
                 kigurumiMorphTargetDictionary && Object.keys(kigurumiMorphTargetDictionary).map((key: string) => {
                   return <div key={key}
-                    className="flex flex-row justify-between items-center my-4">
+                    className="w-2/5 flex flex-row justify-between items-center m-2">
                     <Slider
                       key={key}
                       label={`${(shapeKeyDict as any)[key]?.zh_CN ?? ""}`}
@@ -105,7 +105,7 @@ function App() {
                   </div>
                 })
               }
-            </div>
+            </ScrollShadow>
 
             <div className="pt-2">
               <p className="text-gray-400 m-0 text-sm my-2 font-thin ">
@@ -184,7 +184,7 @@ function App() {
 
           </div>
         </div>
-      </div>
+      </div >
     </div >
   )
 }
