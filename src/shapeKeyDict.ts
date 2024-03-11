@@ -1,5 +1,17 @@
 
 export const shapeKeyDict = {
+  "Fcl_ALL_One": {
+    "zh_CN": "御姐",
+    "zh_HK": "御姉",
+    "en_US": "Loli",
+    "ja_JP": "御姉"
+  },
+  "Fcl_ALL_Loli": {
+    "zh_CN": "萝莉",
+    "zh_HK": "蘿莉",
+    "en_US": "Elegant",
+    "ja_JP": "ロリ"
+  },
   "Fcl_ALL_Neutral": {
     "zh_CN": "自然",
     "zh_HK": "自然",
