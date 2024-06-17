@@ -161,5 +161,11 @@ export const shapeKeyDict = {
     "zh_HK": "大嘴",
     "en_US": "Large Mouth",
     "ja_JP": "大きな口"
+  },
+  "Fcl_EYE_01": {
+    "zh_CN": "眼形01",
+    "zh_HK": "眼形01",
+    "en_US": "Eye01",
+    "ja_JP": "目01"
   }
 }
